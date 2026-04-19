@@ -1,0 +1,111 @@
+@use '@/styles/mixins' as *;
+
+.card {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: border-color var(--transition-fast), opacity var(--transition-fast);
+
+  &:hover {
+    border-color: var(--color-border);
+
+    .deleteBtn {
+      opacity: 1;
+    }
+  }
+}
+
+.cardDeleting {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.stripe {
+  width: 3px;
+  flex-shrink: 0;
+  background: var(--color-accent);
+  opacity: 0.6;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--color-text-primary);
+  @include truncate;
+}
+
+.subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  @include truncate;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.duration {
+  font-family: $font-mono;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.deleteBtn {
+  @include button-reset;
+  @include focus-ring;
+  @include flex-center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  opacity: 0;
+  transition: opacity var(--transition-fast), color var(--transition-fast), background var(--transition-fast);
+
+  &:hover {
+    color: var(--color-danger);
+    background: var(--color-danger-dim);
+  }
+
+  &:disabled {
+    pointer-events: none;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--color-text-muted);
+  border-top-color: var(--color-text-secondary);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  flex-shrink: 0;
+}

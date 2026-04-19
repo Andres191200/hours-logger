@@ -1,0 +1,64 @@
+@use '@/styles/mixins' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+
+  strong {
+    color: var(--color-text-primary);
+    font-weight: 500;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+
+.card {
+  @include button-reset;
+  @include focus-ring;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
+
+  &:hover {
+    border-color: var(--color-accent);
+    background: var(--color-accent-dim);
+  }
+}
+
+.cardSelected {
+  border-color: var(--color-accent);
+  background: var(--color-accent-dim);
+}
+
+.icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.activityLabel {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-align: center;
+}
+
+.cardSelected .activityLabel {
+  color: var(--color-accent);
+}
