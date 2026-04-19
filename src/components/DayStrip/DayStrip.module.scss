@@ -2,7 +2,7 @@
 
 .wrapper {
   overflow-x: auto;
-  padding: var(--space-1) 0;
+  padding: $xsm 0;
 
   &::-webkit-scrollbar {
     height: 0;
@@ -11,7 +11,7 @@
 
 .track {
   display: flex;
-  gap: var(--space-2);
+  gap: $sm;
   min-width: max-content;
 }
 
@@ -21,9 +21,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-2) var(--space-3);
-  border-radius: var(--radius-md);
+  gap: $xsm;
+  padding: $sm calc(#{$sm} + #{$xsm});
+  border-radius: $radiusMd;
   min-width: 72px;
   border: 1px solid var(--color-border-subtle);
   background: transparent;
@@ -66,7 +66,7 @@
 }
 
 .dayName {
-  font-size: var(--font-size-xs);
+  font-size: $fontSm;
   font-weight: 600;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -74,7 +74,7 @@
 
 .dateNum {
   font-family: $font-mono;
-  font-size: var(--font-size-sm);
+  font-size: $fontSm;
   font-weight: 500;
   color: var(--color-text-muted);
   transition: color var(--transition-fast);

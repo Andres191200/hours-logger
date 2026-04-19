@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-4) var(--space-6);
+  padding: $md $xl;
   border-bottom: 1px solid var(--color-border-subtle);
   background: var(--color-surface);
   position: sticky;
@@ -22,42 +22,42 @@
 .headerLeft {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: $md;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: $sm;
 }
 
 .logoText {
-  font-size: var(--font-size-md);
+  font-size: $fontLg;
   font-weight: 600;
   color: var(--color-text-primary);
   letter-spacing: -0.02em;
 }
 
 .userName {
-  font-size: var(--font-size-sm);
+  font-size: $fontSm;
   color: var(--color-text-muted);
   border-left: 1px solid var(--color-border);
-  padding-left: var(--space-4);
+  padding-left: $md;
 }
 
 .headerRight {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
+  gap: $sm;
 }
 
 .signOutBtn {
   @include button-reset;
   @include focus-ring;
-  font-size: var(--font-size-sm);
+  font-size: $fontSm;
   color: var(--color-text-muted);
-  padding: var(--space-1) var(--space-2);
-  border-radius: var(--radius-sm);
+  padding: $xsm $sm;
+  border-radius: $radiusSm;
   transition: color var(--transition-fast);
 
   &:hover {
@@ -70,10 +70,10 @@
   max-width: 720px;
   width: 100%;
   margin: 0 auto;
-  padding: var(--space-6);
+  padding: $xl;
   display: flex;
   flex-direction: column;
-  gap: var(--space-8);
+  gap: $2xl;
 }
 
 .dayStripSection {
@@ -83,12 +83,12 @@
 .sectionHeader {
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  margin-bottom: var(--space-4);
+  gap: calc(#{$sm} + #{$xsm});
+  margin-bottom: $md;
 }
 
 .sectionTitle {
-  font-size: var(--font-size-sm);
+  font-size: $fontSm;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -97,14 +97,14 @@
 
 .totalBadge {
   font-family: $font-mono;
-  font-size: var(--font-size-xs);
+  font-size: $fontSm;
   font-weight: 500;
   color: var(--color-accent);
   background: var(--color-accent-dim);
   border: 1px solid var(--color-accent);
   border-opacity: 0.4;
-  padding: 2px var(--space-2);
-  border-radius: var(--radius-full);
+  padding: 2px $sm;
+  border-radius: $radiusFull;
   transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
 }
 
@@ -123,20 +123,20 @@
 .entriesList {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: $sm;
 }
 
 .entriesLoading {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: $sm;
 }
 
 .skeletonCard {
   height: 60px;
   background: var(--color-surface);
   border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-md);
+  border-radius: $radiusMd;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
@@ -144,7 +144,7 @@
   height: 44px;
   background: var(--color-surface);
   border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-md);
+  border-radius: $radiusMd;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
@@ -157,21 +157,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-8) var(--space-4);
+  gap: calc(#{$sm} + #{$xsm});
+  padding: $2xl $md;
   color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
+  font-size: $fontSm;
   border: 1px dashed var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: $radiusMd;
   text-align: center;
 }
 
 .pendingSection {
-  margin-top: var(--space-6);
+  margin-top: $xl;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
-  padding-top: var(--space-6);
+  gap: calc(#{$sm} + #{$xsm});
+  padding-top: $xl;
   border-top: 1px solid var(--color-border-subtle);
 }
 
@@ -181,7 +181,7 @@
 }
 
 .pendingTitle {
-  font-size: var(--font-size-xs);
+  font-size: $fontSm;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -191,18 +191,18 @@
 .pendingList {
   display: flex;
   flex-direction: column;
-  gap: var(--space-1);
+  gap: $xsm;
 }
 
 .saveBtn {
   @include button-reset;
   @include focus-ring;
   @include flex-center;
-  gap: var(--space-2);
+  gap: $sm;
   width: 100%;
-  padding: var(--space-3) var(--space-5);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-base);
+  padding: calc(#{$sm} + #{$xsm}) calc(#{$md} + #{$xsm});
+  border-radius: $radiusMd;
+  font-size: $fontMd;
   font-weight: 500;
   background: var(--color-surface);
   border: 1px solid var(--color-border);

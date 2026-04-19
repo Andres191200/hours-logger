@@ -3,11 +3,11 @@
 .row {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
+  gap: $sm;
+  padding: $sm calc(#{$sm} + #{$xsm});
   background: var(--color-surface);
   border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-sm);
+  border-radius: $radiusSm;
   transition: border-color var(--transition-fast);
 
   &:hover {
@@ -29,14 +29,14 @@
 
 .label {
   flex: 1;
-  font-size: var(--font-size-sm);
+  font-size: $fontSm;
   color: var(--color-text-primary);
   @include truncate;
 }
 
 .duration {
   font-family: $font-mono;
-  font-size: var(--font-size-sm);
+  font-size: $fontSm;
   font-weight: 500;
   color: var(--color-text-secondary);
   flex-shrink: 0;
@@ -49,7 +49,7 @@
   @include flex-center;
   width: 22px;
   height: 22px;
-  border-radius: var(--radius-sm);
+  border-radius: $radiusSm;
   color: var(--color-text-muted);
   flex-shrink: 0;
   opacity: 0;
