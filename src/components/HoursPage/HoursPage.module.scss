@@ -73,7 +73,7 @@
   padding: $xl;
   display: flex;
   flex-direction: column;
-  gap: $2xl;
+  gap: $xxl;
 }
 
 .dayStripSection {
@@ -158,7 +158,7 @@
   flex-direction: column;
   align-items: center;
   gap: calc(#{$sm} + #{$xsm});
-  padding: $2xl $md;
+  padding: $xxl $md;
   color: var(--color-text-muted);
   font-size: $fontSm;
   border: 1px dashed var(--color-border);
