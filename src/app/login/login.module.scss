@@ -1,0 +1,76 @@
+@use '@/styles/mixins' as *;
+
+.container {
+  @include flex-center;
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding: var(--space-4);
+}
+
+.card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.logoText {
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.title {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-top: calc(-1 * var(--space-2));
+}
+
+.signInBtn {
+  @include button-reset;
+  @include focus-ring;
+  @include flex-center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-accent);
+  color: #fff;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  margin-top: var(--space-4);
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+
+  &:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 20px rgba(124, 106, 247, 0.35);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}

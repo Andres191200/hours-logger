@@ -1,0 +1,85 @@
+@use '@/styles/mixins' as *;
+
+.wrapper {
+  overflow-x: auto;
+  padding: var(--space-1) 0;
+
+  &::-webkit-scrollbar {
+    height: 0;
+  }
+}
+
+.track {
+  display: flex;
+  gap: var(--space-2);
+  min-width: max-content;
+}
+
+.dayBtn {
+  @include button-reset;
+  @include focus-ring;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  min-width: 72px;
+  border: 1px solid var(--color-border-subtle);
+  background: transparent;
+  color: var(--color-text-secondary);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
+
+  &:hover:not(.dayBtnSelected) {
+    background: var(--color-surface);
+    color: var(--color-text-primary);
+    border-color: var(--color-border);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+.dayBtnSelected {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+
+  &:hover {
+    background: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+  }
+
+  .dateNum {
+    color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+.dayBtnToday:not(.dayBtnSelected) {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.dayName {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.dateNum {
+  font-family: $font-mono;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast);
+}
+
+.dayBtnSelected .dateNum {
+  color: rgba(255, 255, 255, 0.75);
+}

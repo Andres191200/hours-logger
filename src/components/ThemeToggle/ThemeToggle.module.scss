@@ -1,0 +1,36 @@
+@use '@/styles/mixins' as *;
+
+.btn {
+  @include button-reset;
+  @include flex-center;
+  @include focus-ring;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: color var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-text-primary);
+    background: var(--color-surface-elevated);
+    border-color: var(--color-border);
+  }
+}
+
+.placeholder {
+  width: 36px;
+  height: 36px;
+}
+
+.iconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-base), opacity var(--transition-base);
+}
+
+.iconWrapLight {
+  transform: rotate(20deg);
+}

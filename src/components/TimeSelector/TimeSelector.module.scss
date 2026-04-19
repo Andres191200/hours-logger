@@ -1,0 +1,88 @@
+@use '@/styles/mixins' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.rowLabel {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  min-width: 36px;
+  flex-shrink: 0;
+}
+
+.btnGroup {
+  display: flex;
+  gap: var(--space-1);
+  flex-wrap: wrap;
+}
+
+.btn {
+  @include button-reset;
+  @include focus-ring;
+  font-family: $font-mono;
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  padding: var(--space-1) var(--space-3);
+  min-width: 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text-secondary);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+  cursor: pointer;
+
+  &:hover:not(.btnSelected) {
+    background: var(--color-surface-elevated);
+    color: var(--color-text-primary);
+    border-color: var(--color-border);
+  }
+}
+
+.btnSelected {
+  background: var(--color-accent);
+  color: #fff;
+  border-color: var(--color-accent);
+
+  &:hover {
+    background: var(--color-accent-hover);
+    border-color: var(--color-accent-hover);
+  }
+}
+
+.summary {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-success-dim);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-success);
+  border-opacity: 0.3;
+}
+
+.summaryTime {
+  font-family: $font-mono;
+  font-size: var(--font-size-md);
+  font-weight: 500;
+  color: var(--color-success);
+}
+
+.summaryLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
