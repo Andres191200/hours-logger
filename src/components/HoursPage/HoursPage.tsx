@@ -1,5 +1,5 @@
 'use client'
-import { useState, useCallback, useMemo, startTransition } from 'react'
+import { useState, useCallback, useMemo, useRef, startTransition } from 'react'
 import { useSession } from 'next-auth/react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { AnimatePresence } from 'motion/react'
@@ -22,6 +22,7 @@ import {
 } from '@/lib/workedTimesApi'
 import { getVisibleDates, getDefaultDate, formatMinutes } from '@/lib/dates'
 
+import type { AddEntryPanelHandle } from '@/components/AddEntryPanel/AddEntryPanel'
 import type { PendingEntry as PendingEntryType, CreateWorkedTimePayload } from '@/types'
 import styles from './HoursPage.module.scss'
 
@@ -32,6 +33,8 @@ export function HoursPage() {
   const [selectedDate, setSelectedDate] = useState<string>(getDefaultDate)
   const [pendingEntries, setPendingEntries] = useState<PendingEntryType[]>([])
   const [deletingIds, setDeletingIds] = useState<Set<number>>(new Set())
+  const [panelHasEntry, setPanelHasEntry] = useState(false)
+  const panelRef = useRef<AddEntryPanelHandle>(null)
 
   const dates = useMemo(() => getVisibleDates(), [])
 
@@ -127,11 +130,14 @@ export function HoursPage() {
   const [isSaving, setIsSaving] = useState(false)
 
   const handleSave = useCallback(async () => {
-    if (!personId || pendingEntries.length === 0 || !apiClient) return
+    if (!personId || !apiClient) return
+    const flushed = panelRef.current?.flushCurrent() ?? null
+    const toSave = flushed ? [...pendingEntries, flushed] : [...pendingEntries]
+    if (toSave.length === 0) return
     setIsSaving(true)
 
     const results = await Promise.allSettled(
-      pendingEntries.map((entry) => {
+      toSave.map((entry) => {
         const payload: CreateWorkedTimePayload = {
           date: selectedDate,
           minutes: entry.minutes,
@@ -144,23 +150,16 @@ export function HoursPage() {
     )
 
     const succeeded = results.filter((r) => r.status === 'fulfilled').length
-    const failed = results.filter((r) => r.status === 'rejected')
+    const failedEntries = toSave.filter((_, i) => results[i].status === 'rejected')
 
     if (succeeded > 0) {
-      setPendingEntries((prev) => {
-        const failedIdxs = new Set(
-          results
-            .map((r, i) => (r.status === 'rejected' ? i : -1))
-            .filter((i) => i !== -1)
-        )
-        return prev.filter((_, i) => failedIdxs.has(i))
-      })
+      setPendingEntries(failedEntries)
       queryClient.invalidateQueries({ queryKey: ['worked-times'] })
       toast.success(`${succeeded} ${succeeded === 1 ? 'entry' : 'entries'} saved`)
     }
 
-    if (failed.length > 0) {
-      toast.error(`${failed.length} ${failed.length === 1 ? 'entry' : 'entries'} failed to save`)
+    if (failedEntries.length > 0) {
+      toast.error(`${failedEntries.length} ${failedEntries.length === 1 ? 'entry' : 'entries'} failed to save`)
     }
 
     setIsSaving(false)
@@ -287,9 +286,11 @@ export function HoursPage() {
 
           {personId ? (
             <AddEntryPanel
+              ref={panelRef}
               personId={personId}
               objectives={objectives}
               onAdd={handleAddPending}
+              onValidChange={setPanelHasEntry}
             />
           ) : (
             <div className={styles.entriesLoading}>
@@ -297,24 +298,21 @@ export function HoursPage() {
             </div>
           )}
 
-          {pendingEntries.length > 0 && (
+          {(pendingEntries.length > 0 || panelHasEntry) && (
             <div className={styles.pendingSection}>
-              <div className={styles.pendingHeader}>
-                <span className={styles.pendingTitle}>
-                  Queue ({pendingEntries.length})
-                </span>
-              </div>
-              <div className={styles.pendingList}>
-                <AnimatePresence initial={false}>
-                  {pendingEntries.map((entry) => (
-                    <PendingEntry
-                      key={entry.id}
-                      entry={entry}
-                      onRemove={handleRemovePending}
-                    />
-                  ))}
-                </AnimatePresence>
-              </div>
+              {pendingEntries.length > 0 && (
+                <div className={styles.pendingList}>
+                  <AnimatePresence initial={false}>
+                    {pendingEntries.map((entry) => (
+                      <PendingEntry
+                        key={entry.id}
+                        entry={entry}
+                        onRemove={handleRemovePending}
+                      />
+                    ))}
+                  </AnimatePresence>
+                </div>
+              )}
               <button
                 className={`${styles.saveBtn} ${!isSaving ? styles.saveBtnActive : ''}`}
                 onClick={handleSave}
@@ -330,7 +328,7 @@ export function HoursPage() {
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                       <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    Save {pendingEntries.length} {pendingEntries.length === 1 ? 'entry' : 'entries'}
+                    {(() => { const n = pendingEntries.length + (panelHasEntry ? 1 : 0); return `Log ${n} ${n === 1 ? 'entry' : 'entries'}` })()}
                   </>
                 )}
               </button>
