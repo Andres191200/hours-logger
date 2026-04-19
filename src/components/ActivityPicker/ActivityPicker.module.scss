@@ -3,11 +3,11 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: calc(#{$sm} + #{$xsm});
 }
 
 .label {
-  font-size: var(--font-size-sm);
+  font-size: $fontSm;
   color: var(--color-text-secondary);
 
   strong {
@@ -19,7 +19,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-2);
+  gap: $sm;
 }
 
 .card {
@@ -28,11 +28,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-4) var(--space-3);
+  gap: $sm;
+  padding: $md calc(#{$sm} + #{$xsm});
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: $radiusMd;
   cursor: pointer;
   transition: border-color var(--transition-fast), background var(--transition-fast);
 
@@ -53,7 +53,7 @@
 }
 
 .activityLabel {
-  font-size: var(--font-size-xs);
+  font-size: $fontSm;
   font-weight: 500;
   color: var(--color-text-secondary);
   text-align: center;

@@ -1,6 +1,23 @@
-// SASS variables (injected into every module via additionalData)
-// These are pure SASS variables — no CSS output from this file alone.
-// CSS custom properties are defined in globals.scss.
-
+// ─── Fonts ────────────────────────────────────────────────────────────────────
 $font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
 $font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+// ─── Font sizes (responsive via clamp) ────────────────────────────────────────
+// clamp(min, preferred, max)
+$fontSm:    clamp(0.6875rem, 0.6rem + 0.35vw, 0.8125rem);   // 11–13px  — labels, badges, captions
+$fontMd:    clamp(0.8125rem, 0.72rem + 0.45vw, 0.9375rem);  // 13–15px  — body text
+$fontLg:    clamp(0.9375rem, 0.83rem + 0.5vw, 1.0625rem);   // 15–17px  — emphasis, subtitles
+$fontTitle: clamp(1.125rem, 0.9rem + 1.2vw, 1.5rem);        // 18–24px  — section headings
+
+// ─── Spacing ──────────────────────────────────────────────────────────────────
+$xsm: 4px;
+$sm:  8px;
+$md:  16px;
+$xl:  24px;
+$xxl: 32px;
+
+// ─── Border radii ─────────────────────────────────────────────────────────────
+$radiusSm:   6px;
+$radiusMd:   10px;
+$radiusLg:   16px;
+$radiusFull: 9999px;
