@@ -3,18 +3,18 @@
 .panel {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: $md;
 }
 
 .selectionBadge {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-2) var(--space-3);
+  gap: $sm;
+  padding: $sm calc(#{$sm} + #{$xsm});
   background: var(--color-accent-dim);
   border: 1px solid var(--color-accent);
   border-opacity: 0.4;
-  border-radius: var(--radius-md);
+  border-radius: $radiusMd;
 }
 
 .badgeIcon {
@@ -24,7 +24,7 @@
 
 .badgeLabel {
   flex: 1;
-  font-size: var(--font-size-sm);
+  font-size: $fontSm;
   font-weight: 500;
   color: var(--color-text-primary);
   @include truncate;
@@ -36,7 +36,7 @@
   @include flex-center;
   width: 20px;
   height: 20px;
-  border-radius: var(--radius-sm);
+  border-radius: $radiusSm;
   color: var(--color-text-muted);
   flex-shrink: 0;
   transition: color var(--transition-fast), background var(--transition-fast);
@@ -50,17 +50,17 @@
 .timeSelectorWrap {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: $md;
 }
 
 .addBtn {
   @include button-reset;
   @include focus-ring;
   @include flex-center;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-5);
-  border-radius: var(--radius-md);
-  font-size: var(--font-size-sm);
+  gap: $sm;
+  padding: calc(#{$sm} + #{$xsm}) calc(#{$md} + #{$xsm});
+  border-radius: $radiusMd;
+  font-size: $fontSm;
   font-weight: 500;
   border: 1px solid var(--color-border);
   background: var(--color-surface);
