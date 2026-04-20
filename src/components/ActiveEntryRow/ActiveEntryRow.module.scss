@@ -1,0 +1,48 @@
+@use '@/styles/mixins' as *;
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: $md;
+  padding: $md;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: $radiusMd;
+  border-left: 3px solid var(--color-accent);
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: $sm;
+}
+
+.badgeIcon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.badgeLabel {
+  flex: 1;
+  font-size: $fontMd;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  @include truncate;
+}
+
+.removeBtn {
+  @include button-reset;
+  @include focus-ring;
+  @include flex-center;
+  width: 24px;
+  height: 24px;
+  border-radius: $radiusSm;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: color var(--transition-fast), background var(--transition-fast);
+
+  &:hover {
+    color: var(--color-danger);
+    background: var(--color-danger-dim);
+  }
+}

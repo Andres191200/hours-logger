@@ -47,45 +47,48 @@
   }
 }
 
-.timeSelectorWrap {
+.activityWrap {
   display: flex;
   flex-direction: column;
   gap: $md;
 }
 
-.addBtn {
+.projectBadge {
+  display: flex;
+  align-items: center;
+  gap: $sm;
+  padding: $sm calc(#{$sm} + #{$xsm});
+  background: var(--color-accent-dim);
+  border: 1px solid var(--color-accent);
+  border-radius: $radiusMd;
+}
+
+.badgeIcon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.badgeLabel {
+  flex: 1;
+  font-size: $fontSm;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  @include truncate;
+}
+
+.badgeReset {
   @include button-reset;
   @include focus-ring;
   @include flex-center;
-  gap: $sm;
-  padding: calc(#{$sm} + #{$xsm}) calc(#{$md} + #{$xsm});
-  border-radius: $radiusMd;
-  font-size: $fontSm;
-  font-weight: 500;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  width: 20px;
+  height: 20px;
+  border-radius: $radiusSm;
   color: var(--color-text-muted);
-  cursor: not-allowed;
-  transition:
-    background var(--transition-fast),
-    color var(--transition-fast),
-    border-color var(--transition-fast),
-    transform var(--transition-fast);
-}
-
-.addBtnEnabled {
-  background: var(--color-accent);
-  color: #fff;
-  border-color: var(--color-accent);
-  cursor: pointer;
+  flex-shrink: 0;
+  transition: color var(--transition-fast), background var(--transition-fast);
 
   &:hover {
-    background: var(--color-accent-hover);
-    border-color: var(--color-accent-hover);
-    transform: translateY(-1px);
-  }
-
-  &:active {
-    transform: scale(0.98);
+    color: var(--color-danger);
+    background: var(--color-danger-dim);
   }
 }
