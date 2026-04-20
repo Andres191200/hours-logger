@@ -333,20 +333,18 @@ export function HoursPage() {
               </div>
             )}
 
-            {activeEntries.length > 0 && (
-              <div className={styles.activeList}>
-                <AnimatePresence initial={false}>
-                  {[...activeEntries].reverse().map((entry) => (
-                    <ActiveEntryRow
-                      key={entry.id}
-                      entry={entry}
-                      onChange={handleEntryChange}
-                      onRemove={handleEntryRemove}
-                    />
-                  ))}
-                </AnimatePresence>
-              </div>
-            )}
+            <div className={styles.activeList}>
+              <AnimatePresence initial={false}>
+                {[...activeEntries].reverse().map((entry) => (
+                  <ActiveEntryRow
+                    key={entry.id}
+                    entry={entry}
+                    onChange={handleEntryChange}
+                    onRemove={handleEntryRemove}
+                  />
+                ))}
+              </AnimatePresence>
+            </div>
           </section>
         </main>
 
