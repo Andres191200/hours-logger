@@ -7,6 +7,15 @@
   flex-direction: column;
 }
 
+.pageBody {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: $xl;
+  padding: $xl;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -66,11 +75,8 @@
 }
 
 .main {
-  flex: 1;
-  max-width: 720px;
-  width: 100%;
-  margin: 0 auto;
-  padding: $xl;
+  flex: 0 1 720px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: $xxl;
@@ -166,32 +172,71 @@
   text-align: center;
 }
 
-.pendingSection {
-  margin-top: $xl;
+.activeList {
   display: flex;
   flex-direction: column;
-  gap: calc(#{$sm} + #{$xsm});
-  padding-top: $xl;
-  border-top: 1px solid var(--color-border-subtle);
+  gap: $md;
 }
 
-.pendingHeader {
+// ─── Summary panel ────────────────────────────────────────────────────────────
+
+.summaryPanel {
+  width: 260px;
+  flex-shrink: 0;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: $md;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: $radiusMd;
+  padding: $md;
+  position: sticky;
+  top: calc(56px + #{$xl});
+  align-self: flex-start;
 }
 
-.pendingTitle {
+.summaryTitle {
   font-size: $fontSm;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-text-muted);
+  padding-bottom: $sm;
+  border-bottom: 1px solid var(--color-border-subtle);
 }
 
-.pendingList {
+.summaryList {
   display: flex;
   flex-direction: column;
   gap: $xsm;
+}
+
+.summaryItem {
+  display: flex;
+  align-items: baseline;
+  gap: $sm;
+  padding: $xsm 0;
+}
+
+.summaryLabel {
+  flex: 1;
+  font-size: $fontSm;
+  color: var(--color-text-secondary);
+  @include truncate;
+}
+
+.summaryDuration {
+  font-family: $font-mono;
+  font-size: $fontSm;
+  font-weight: 500;
+  color: var(--color-accent);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.summaryDivider {
+  height: 1px;
+  background: var(--color-border-subtle);
 }
 
 .saveBtn {

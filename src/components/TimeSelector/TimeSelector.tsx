@@ -9,7 +9,7 @@ interface TimeSelectorProps {
   onChange: (h: number, m: number) => void
 }
 
-const HOUR_OPTIONS = [0, 1, 2, 3, 4, 5, 6]
+const HOUR_OPTIONS = [1, 2, 3, 4, 5, 6]
 const MINUTE_OPTIONS = [0, 15, 30, 45]
 
 export function TimeSelector({ hours, minutes, onChange }: TimeSelectorProps) {
@@ -41,7 +41,7 @@ export function TimeSelector({ hours, minutes, onChange }: TimeSelectorProps) {
           {MINUTE_OPTIONS.map((m) => (
             <motion.button
               key={m}
-              className={`${styles.btn} ${minutes === m && hours > 0 ? styles.btnSelected : ''} ${m === 0 && minutes === 0 ? styles.btnSelected : ''}`}
+              className={`${styles.btn} ${minutes === m ? styles.btnSelected : ''}`}
               onClick={() => onChange(hours, m)}
               whileTap={{ scale: 0.95 }}
               aria-pressed={minutes === m}
