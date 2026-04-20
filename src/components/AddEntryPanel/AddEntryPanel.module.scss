@@ -47,8 +47,48 @@
   }
 }
 
-.timeSelectorWrap {
+.activityWrap {
   display: flex;
   flex-direction: column;
   gap: $md;
+}
+
+.projectBadge {
+  display: flex;
+  align-items: center;
+  gap: $sm;
+  padding: $sm calc(#{$sm} + #{$xsm});
+  background: var(--color-accent-dim);
+  border: 1px solid var(--color-accent);
+  border-radius: $radiusMd;
+}
+
+.badgeIcon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.badgeLabel {
+  flex: 1;
+  font-size: $fontSm;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  @include truncate;
+}
+
+.badgeReset {
+  @include button-reset;
+  @include focus-ring;
+  @include flex-center;
+  width: 20px;
+  height: 20px;
+  border-radius: $radiusSm;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: color var(--transition-fast), background var(--transition-fast);
+
+  &:hover {
+    color: var(--color-danger);
+    background: var(--color-danger-dim);
+  }
 }

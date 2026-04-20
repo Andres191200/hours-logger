@@ -46,11 +46,12 @@ export interface ActivityOption {
   icon: string
 }
 
-// A pending entry staged for submission
-export interface PendingEntry {
-  id: string // local uuid
+// An active entry being configured by the user (pre-POST)
+export interface ActiveEntry {
+  id: string
   target: SearchTarget
-  activityType?: ActivityType // only for project-kind targets
-  minutes: number
-  label: string // display string e.g. "Redesign home · Grava App" or "Kubernetes · Meeting"
+  activityType?: ActivityType
+  hours: number   // 1–6
+  minutes: number // 0, 15, 30, 45
+  label: string
 }
