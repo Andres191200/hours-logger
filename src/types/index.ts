@@ -46,6 +46,30 @@ export interface ActivityOption {
   icon: string
 }
 
+// ─── Report types ─────────────────────────────────────────────────────────────
+
+export interface ReportObjective {
+  objectiveId: number
+  objectiveTitle: string
+  totalMinutes: number
+}
+
+export interface ReportProject {
+  projectId: number
+  projectName: string
+  projectCode: string
+  totalMinutes: number
+  objectives: ReportObjective[]
+}
+
+export interface ReportByPersonEntry {
+  personId: number
+  personFirstName: string
+  personLastName: string
+  totalMinutes: number
+  projects: ReportProject[]
+}
+
 // An active entry being configured by the user (pre-POST)
 export interface ActiveEntry {
   id: string

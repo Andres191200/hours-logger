@@ -1,5 +1,5 @@
 import type { AxiosInstance } from 'axios'
-import type { Person, PersonObjective, WorkedTimeEntry, CreateWorkedTimePayload } from '@/types'
+import type { Person, PersonObjective, WorkedTimeEntry, CreateWorkedTimePayload, ReportByPersonEntry } from '@/types'
 
 export const getPersons = (client: AxiosInstance): Promise<Person[]> =>
   client.get('/persons').then(r => r.data)
@@ -15,3 +15,10 @@ export const createWorkedTime = (client: AxiosInstance, payload: CreateWorkedTim
 
 export const deleteWorkedTime = (client: AxiosInstance, id: number): Promise<void> =>
   client.delete(`/worked-times/${id}`).then(r => r.data)
+
+export const getWorkedTimesReport = (
+  client: AxiosInstance,
+  dateFrom: string,
+  dateTo: string,
+): Promise<ReportByPersonEntry[]> =>
+  client.get(`/worked-times/report/by-person?dateFrom=${dateFrom}&dateTo=${dateTo}`).then(r => r.data)
