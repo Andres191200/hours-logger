@@ -11,6 +11,7 @@ import { EntryCard } from '@/components/EntryCard/EntryCard'
 import { AddEntryPanel } from '@/components/AddEntryPanel/AddEntryPanel'
 import { ActiveEntryRow } from '@/components/ActiveEntryRow/ActiveEntryRow'
 import { ThemeToggle } from '@/components/ThemeToggle/ThemeToggle'
+import { BottomNav } from '@/components/BottomNav/BottomNav'
 
 import { createClientApiInstance } from '@/lib/api'
 import {
@@ -398,6 +399,8 @@ export function HoursPage() {
           )}
         </AnimatePresence>
       </div>
+
+      <BottomNav />
     </div>
   )
 }

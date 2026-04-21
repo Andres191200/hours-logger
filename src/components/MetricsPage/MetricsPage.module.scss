@@ -1,0 +1,228 @@
+@use '@/styles/mixins' as *;
+
+.page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 80px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $md $xl;
+  border-bottom: 1px solid var(--color-border-subtle);
+  background: var(--color-surface);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.headerLeft {
+  display: flex;
+  align-items: center;
+  gap: $md;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: $sm;
+}
+
+.logoText {
+  font-size: $fontLg;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.userName {
+  font-size: $fontSm;
+  color: var(--color-text-muted);
+  border-left: 1px solid var(--color-border);
+  padding-left: $md;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: $sm;
+}
+
+.signOutBtn {
+  @include button-reset;
+  @include focus-ring;
+  font-size: $fontSm;
+  color: var(--color-text-muted);
+  padding: $xsm $sm;
+  border-radius: $radiusSm;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--color-text-secondary);
+  }
+}
+
+.pageBody {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: $xl;
+}
+
+.main {
+  flex: 0 1 720px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $xxl;
+}
+
+.pageTitle {
+  display: flex;
+  align-items: baseline;
+  gap: $md;
+}
+
+.title {
+  font-size: $fontTitle;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.titlePeriod {
+  font-size: $fontMd;
+  color: var(--color-text-muted);
+}
+
+// ─── Stat cards ───────────────────────────────────────────────────────────────
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $md;
+}
+
+.statCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: $radiusMd;
+  padding: $md calc(#{$md} + #{$xsm});
+  display: flex;
+  flex-direction: column;
+  gap: $xsm;
+}
+
+.statCardAccent {
+  border-color: var(--color-accent);
+  background: var(--color-accent-dim);
+}
+
+.statLabel {
+  font-size: $fontSm;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statValue {
+  font-family: $font-mono;
+  font-size: $fontTitle;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.statValueSmall {
+  font-family: $font-sans;
+  font-size: $fontLg;
+  @include truncate;
+}
+
+.statValueWarn {
+  color: #f59e0b;
+}
+
+.skeletonCard {
+  height: 88px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: $radiusMd;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+// ─── Chart ────────────────────────────────────────────────────────────────────
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  gap: calc(#{$sm} + #{$xsm});
+  margin-bottom: $md;
+}
+
+.sectionTitle {
+  font-size: $fontSm;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.chartSection {
+  display: flex;
+  flex-direction: column;
+}
+
+.chartWrap {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: $radiusMd;
+  padding: $md $md $md 0;
+}
+
+.chartSkeleton {
+  height: 300px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: $radiusMd;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.emptyState {
+  @include flex-center;
+  padding: $xxl $md;
+  color: var(--color-text-muted);
+  font-size: $fontSm;
+  border: 1px dashed var(--color-border);
+  border-radius: $radiusMd;
+}
+
+// ─── Loading spinner ──────────────────────────────────────────────────────────
+
+.loading {
+  @include flex-center;
+  min-height: 100vh;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
