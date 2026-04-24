@@ -3,12 +3,13 @@ import { useState, useCallback } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { TargetSearch } from '@/components/TargetSearch/TargetSearch'
 import { ActivityPicker } from '@/components/ActivityPicker/ActivityPicker'
-import type { PersonObjective, SearchTarget, ActivityType } from '@/types'
+import type { PersonObjective, Project, SearchTarget, ActivityType } from '@/types'
 import styles from './AddEntryPanel.module.scss'
 
 interface AddEntryPanelProps {
   personId: number
   objectives: PersonObjective[]
+  projects: Project[]
   onAdd: (target: SearchTarget, activityType?: ActivityType) => void
 }
 
@@ -16,7 +17,7 @@ type Step =
   | { name: 'search' }
   | { name: 'project-activity'; target: Extract<SearchTarget, { kind: 'project' }> }
 
-export function AddEntryPanel({ objectives, onAdd }: AddEntryPanelProps) {
+export function AddEntryPanel({ objectives, projects, onAdd }: AddEntryPanelProps) {
   const [step, setStep] = useState<Step>({ name: 'search' })
 
   const handleTargetSelect = useCallback(
@@ -49,6 +50,7 @@ export function AddEntryPanel({ objectives, onAdd }: AddEntryPanelProps) {
     <div className={styles.panel}>
       <TargetSearch
         objectives={objectives}
+        projects={projects}
         onSelect={handleTargetSelect}
         disabled={step.name === 'project-activity'}
       />

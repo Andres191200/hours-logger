@@ -1,16 +1,17 @@
 'use client'
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import type { PersonObjective, SearchTarget } from '@/types'
+import type { PersonObjective, Project, SearchTarget } from '@/types'
 import styles from './TargetSearch.module.scss'
 
 interface TargetSearchProps {
   objectives: PersonObjective[]
+  projects: Project[]
   onSelect: (target: SearchTarget) => void
   disabled?: boolean
 }
 
-function buildTargets(objectives: PersonObjective[]): SearchTarget[] {
+function buildTargets(objectives: PersonObjective[], projects: Project[]): SearchTarget[] {
   const objectiveTargets: SearchTarget[] = objectives.map((o) => ({
     kind: 'objective',
     objectiveId: o.id,
@@ -20,7 +21,16 @@ function buildTargets(objectives: PersonObjective[]): SearchTarget[] {
   }))
 
   const projectMap = new Map<number, SearchTarget>()
-  objectives.forEach((o) => {
+
+  for (const p of projects) {
+    projectMap.set(p.id, {
+      kind: 'project',
+      projectId: p.id,
+      projectName: p.name,
+    })
+  }
+
+  for (const o of objectives) {
     if (!projectMap.has(o.projectId)) {
       projectMap.set(o.projectId, {
         kind: 'project',
@@ -28,12 +38,12 @@ function buildTargets(objectives: PersonObjective[]): SearchTarget[] {
         projectName: o.projectName,
       })
     }
-  })
+  }
 
   return [...objectiveTargets, ...Array.from(projectMap.values())]
 }
 
-export function TargetSearch({ objectives, onSelect, disabled }: TargetSearchProps) {
+export function TargetSearch({ objectives, projects, onSelect, disabled }: TargetSearchProps) {
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const [highlighted, setHighlighted] = useState(-1)
@@ -41,7 +51,7 @@ export function TargetSearch({ objectives, onSelect, disabled }: TargetSearchPro
   const listRef = useRef<HTMLUListElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const allTargets = buildTargets(objectives)
+  const allTargets = buildTargets(objectives, projects)
 
   const filtered = query.trim()
     ? allTargets.filter((t) => {
@@ -55,9 +65,7 @@ export function TargetSearch({ objectives, onSelect, disabled }: TargetSearchPro
 
   const filteredObjectives = filtered.filter((t) => t.kind === 'objective')
   const filteredProjects = filtered.filter((t) => t.kind === 'project')
-  const flatList = [...filteredObjectives, ...filteredProjects]
-  const maxVisible = 6
-  const visible = flatList.slice(0, maxVisible)
+  const visible = [...filteredObjectives, ...filteredProjects]
 
   const handleSelect = useCallback(
     (target: SearchTarget) => {
@@ -118,8 +126,7 @@ export function TargetSearch({ objectives, onSelect, disabled }: TargetSearchPro
 
   const showObjectivesSection = filteredObjectives.length > 0
   const showProjectsSection = filteredProjects.length > 0
-  const objCount = Math.min(filteredObjectives.length, maxVisible)
-  const projCount = Math.min(filteredProjects.length, maxVisible - objCount)
+  const objCount = filteredObjectives.length
 
   return (
     <div className={styles.container} ref={containerRef}>
@@ -163,7 +170,7 @@ export function TargetSearch({ objectives, onSelect, disabled }: TargetSearchPro
               {showObjectivesSection && (
                 <>
                   <li className={styles.sectionHeader} role="presentation">Objectives</li>
-                  {filteredObjectives.slice(0, objCount).map((t, idx) => {
+                  {filteredObjectives.map((t, idx) => {
                     if (t.kind !== 'objective') return null
                     const globalIdx = idx
                     return (
@@ -197,7 +204,7 @@ export function TargetSearch({ objectives, onSelect, disabled }: TargetSearchPro
               {showProjectsSection && (
                 <>
                   <li className={styles.sectionHeader} role="presentation">Projects</li>
-                  {filteredProjects.slice(0, projCount).map((t, idx) => {
+                  {filteredProjects.map((t, idx) => {
                     if (t.kind !== 'project') return null
                     const globalIdx = objCount + idx
                     return (
