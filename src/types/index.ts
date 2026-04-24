@@ -12,6 +12,12 @@ export interface PersonObjective {
   projectName: string
 }
 
+export interface Project {
+  id: number
+  code: string
+  name: string
+}
+
 export interface WorkedTimeEntry {
   id: number
   date: string
