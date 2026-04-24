@@ -17,6 +17,7 @@ import { createClientApiInstance } from '@/lib/api'
 import {
   getPersons,
   getPersonObjectives,
+  getProjects,
   getWorkedTimes,
   createWorkedTime,
   deleteWorkedTime,
@@ -91,6 +92,12 @@ export function HoursPage() {
     queryKey: ['person-objectives', personId],
     queryFn: () => getPersonObjectives(apiClient!, personId!),
     enabled: !!apiClient && !!personId,
+  })
+
+  const { data: projects = [] } = useQuery({
+    queryKey: ['projects', accessToken],
+    queryFn: () => getProjects(apiClient!),
+    enabled: !!apiClient,
   })
 
   const { data: workedTimes = [], isLoading: loadingTimes } = useQuery({
@@ -326,6 +333,7 @@ export function HoursPage() {
               <AddEntryPanel
                 personId={personId}
                 objectives={objectives}
+                projects={projects}
                 onAdd={handleTargetSelected}
               />
             ) : (

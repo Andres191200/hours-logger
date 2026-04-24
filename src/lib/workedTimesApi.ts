@@ -1,11 +1,14 @@
 import type { AxiosInstance } from 'axios'
-import type { Person, PersonObjective, WorkedTimeEntry, CreateWorkedTimePayload, ReportByPersonEntry } from '@/types'
+import type { Person, PersonObjective, Project, WorkedTimeEntry, CreateWorkedTimePayload, ReportByPersonEntry } from '@/types'
 
 export const getPersons = (client: AxiosInstance): Promise<Person[]> =>
   client.get('/persons').then(r => r.data)
 
 export const getPersonObjectives = (client: AxiosInstance, personId: number): Promise<PersonObjective[]> =>
   client.get(`/worked-times/person-objectives?personId=${personId}`).then(r => r.data)
+
+export const getProjects = (client: AxiosInstance): Promise<Project[]> =>
+  client.get('/projects', { params: { state: 'activo,analisis' } }).then(r => r.data)
 
 export const getWorkedTimes = (client: AxiosInstance, date: string, personId: number): Promise<WorkedTimeEntry[]> =>
   client.get(`/worked-times?date=${date}&personId=${personId}`).then(r => r.data)
