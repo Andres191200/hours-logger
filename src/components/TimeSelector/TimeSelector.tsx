@@ -9,7 +9,7 @@ interface TimeSelectorProps {
   onChange: (h: number, m: number) => void
 }
 
-const HOUR_OPTIONS = [1, 2, 3, 4, 5, 6]
+const HOUR_OPTIONS = [0, 1, 2, 3, 4, 5, 6]
 const MINUTE_OPTIONS = [0, 15, 30, 45]
 
 export function TimeSelector({ hours, minutes, onChange }: TimeSelectorProps) {

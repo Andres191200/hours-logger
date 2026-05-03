@@ -17,20 +17,10 @@ import { BottomNav } from '@/components/BottomNav/BottomNav'
 
 import { createClientApiInstance } from '@/lib/api'
 import { getPersons, getWorkedTimesReport } from '@/lib/workedTimesApi'
-import { formatMinutes } from '@/lib/dates'
+import { formatMinutes, getMonthRange, REPORT_STALE_MS } from '@/lib/dates'
 
 import type { ReportByPersonEntry } from '@/types'
 import styles from './MetricsPage.module.scss'
-
-function getMonthRange(): { dateFrom: string; dateTo: string; label: string } {
-  const now = new Date()
-  const dateFrom = new Date(now.getFullYear(), now.getMonth(), 1)
-    .toISOString()
-    .slice(0, 10)
-  const dateTo = now.toISOString().slice(0, 10)
-  const label = now.toLocaleString('default', { month: 'long', year: 'numeric' })
-  return { dateFrom, dateTo, label }
-}
 
 function countWorkingDays(dateFrom: string, dateTo: string): number {
   const from = new Date(dateFrom + 'T00:00:00')
@@ -99,7 +89,11 @@ export function MetricsPage() {
     queryKey: ['report', dateFrom, dateTo, accessToken],
     queryFn: () => getWorkedTimesReport(apiClient!, dateFrom, dateTo),
     enabled: !!apiClient,
+    staleTime: REPORT_STALE_MS,
+    gcTime: REPORT_STALE_MS,
   })
+
+  const dataReady = !!report && !!personId
 
   const myReport = useMemo(() => {
     if (!report || !personId) return null
@@ -161,10 +155,12 @@ export function MetricsPage() {
 
           {/* Stat cards */}
           <section className={styles.statsGrid} aria-label="Monthly statistics">
-            {isLoading || !stats ? (
+            {isLoading || !dataReady ? (
               Array.from({ length: 4 }).map((_, i) => (
                 <div key={i} className={styles.skeletonCard} />
               ))
+            ) : !stats ? (
+              <div className={styles.emptyState}>No hours logged this month</div>
             ) : (
               <>
                 <StatCard
@@ -196,9 +192,9 @@ export function MetricsPage() {
               <h2 className={styles.sectionTitle}>Top objectives</h2>
             </div>
 
-            {isLoading || !stats ? (
+            {isLoading || !dataReady ? (
               <div className={styles.chartSkeleton} />
-            ) : stats.topObjectives.length === 0 ? (
+            ) : !stats || stats.topObjectives.length === 0 ? (
               <div className={styles.emptyState}>No objectives logged this month</div>
             ) : (
               <div className={styles.chartWrap}>
