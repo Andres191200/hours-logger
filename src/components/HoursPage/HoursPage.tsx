@@ -1,5 +1,5 @@
 'use client'
-import { useState, useCallback, useMemo, startTransition } from 'react'
+import { useState, useCallback, useMemo, startTransition, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { AnimatePresence, motion } from 'motion/react'
@@ -21,8 +21,9 @@ import {
   getWorkedTimes,
   createWorkedTime,
   deleteWorkedTime,
+  getWorkedTimesReport,
 } from '@/lib/workedTimesApi'
-import { getVisibleDates, getDefaultDate, formatMinutes } from '@/lib/dates'
+import { getVisibleDates, getDefaultDate, formatMinutes, getMonthRange, REPORT_STALE_MS } from '@/lib/dates'
 
 import type { ActiveEntry, SearchTarget, ActivityType, CreateWorkedTimePayload } from '@/types'
 import styles from './HoursPage.module.scss'
@@ -87,6 +88,18 @@ export function HoursPage() {
     const person = persons.find((p) => p.userId === zitadelId)
     return person?.id ?? null
   }, [persons, zitadelId])
+
+  const { dateFrom, dateTo } = useMemo(() => getMonthRange(), [])
+
+  useEffect(() => {
+    if (!apiClient || !personId) return
+    queryClient.prefetchQuery({
+      queryKey: ['report', dateFrom, dateTo, accessToken],
+      queryFn: () => getWorkedTimesReport(apiClient, dateFrom, dateTo),
+      staleTime: REPORT_STALE_MS,
+      gcTime: REPORT_STALE_MS,
+    })
+  }, [apiClient, personId, queryClient, dateFrom, dateTo, accessToken])
 
   const { data: objectives = [] } = useQuery({
     queryKey: ['person-objectives', personId],
@@ -205,6 +218,7 @@ export function HoursPage() {
     if (succeeded > 0) {
       setActiveEntries(failedEntries)
       queryClient.invalidateQueries({ queryKey: ['worked-times'] })
+      queryClient.invalidateQueries({ queryKey: ['report'] })
       toast.success(`${succeeded} ${succeeded === 1 ? 'entry' : 'entries'} saved`)
     }
 

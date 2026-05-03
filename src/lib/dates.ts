@@ -35,6 +35,16 @@ export const formatDayLabel = (dateStr: string): { day: string; date: string; is
   }
 }
 
+export const REPORT_STALE_MS = 30 * 60 * 1000
+
+export function getMonthRange(): { dateFrom: string; dateTo: string; label: string } {
+  const now = new Date()
+  const dateFrom = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0, 10)
+  const dateTo = now.toISOString().slice(0, 10)
+  const label = now.toLocaleString('default', { month: 'long', year: 'numeric' })
+  return { dateFrom, dateTo, label }
+}
+
 export const formatMinutes = (minutes: number): string => {
   const h = Math.floor(minutes / 60)
   const m = minutes % 60

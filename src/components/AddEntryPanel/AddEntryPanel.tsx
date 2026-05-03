@@ -1,5 +1,5 @@
 'use client'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { TargetSearch } from '@/components/TargetSearch/TargetSearch'
 import { ActivityPicker } from '@/components/ActivityPicker/ActivityPicker'
@@ -17,8 +17,15 @@ type Step =
   | { name: 'search' }
   | { name: 'project-activity'; target: Extract<SearchTarget, { kind: 'project' }> }
 
+const SUGGESTIONS_COUNT = 3
+
 export function AddEntryPanel({ objectives, projects, onAdd }: AddEntryPanelProps) {
   const [step, setStep] = useState<Step>({ name: 'search' })
+
+  const recentObjectives = useMemo(
+    () => [...objectives].sort((a, b) => b.id - a.id).slice(0, SUGGESTIONS_COUNT),
+    [objectives]
+  )
 
   const handleTargetSelect = useCallback(
     (target: SearchTarget) => {
@@ -48,6 +55,31 @@ export function AddEntryPanel({ objectives, projects, onAdd }: AddEntryPanelProp
 
   return (
     <div className={styles.panel}>
+      <AnimatePresence>
+        {step.name === 'search' && recentObjectives.length > 0 && (
+          <motion.div
+            className={styles.suggestions}
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.15 }}
+          >
+            {recentObjectives.map((obj) => (
+              <button
+                key={obj.id}
+                className={styles.chip}
+                onMouseDown={(e) => {
+                  e.preventDefault()
+                  onAdd({ kind: 'objective', objectiveId: obj.id, title: obj.title, projectId: obj.projectId, projectName: obj.projectName })
+                }}
+              >
+                <span className={styles.chipTitle}>{obj.title}</span>
+                <span className={styles.chipSub}>{obj.projectName}</span>
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
       <TargetSearch
         objectives={objectives}
         projects={projects}
