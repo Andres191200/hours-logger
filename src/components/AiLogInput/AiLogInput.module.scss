@@ -1,0 +1,91 @@
+@use '@/styles/mixins' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: $xsm;
+}
+
+.inputWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.aiIcon {
+  position: absolute;
+  left: calc(#{$sm} + #{$xsm});
+  font-size: 13px;
+  color: var(--color-accent);
+  pointer-events: none;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.input {
+  width: 100%;
+  padding: calc(#{$sm} + #{$xsm}) calc(#{$sm} + #{$xsm} + 28px) calc(#{$sm} + #{$xsm}) calc(#{$sm} + #{$xsm} + 18px + #{$sm});
+  background: var(--color-surface);
+  border: 1px solid var(--color-accent);
+  border-radius: $radiusMd;
+  color: var(--color-text-primary);
+  font-size: $fontMd;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  outline: none;
+
+  &::placeholder {
+    color: var(--color-text-muted);
+    font-style: italic;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px var(--color-accent-dim);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.sendBtn {
+  @include button-reset;
+  @include focus-ring;
+  @include flex-center;
+  position: absolute;
+  right: $sm;
+  width: 24px;
+  height: 24px;
+  border-radius: $radiusSm;
+  color: var(--color-accent);
+  flex-shrink: 0;
+  transition: background var(--transition-fast), opacity var(--transition-fast);
+
+  &:hover:not(:disabled) {
+    background: var(--color-accent-dim);
+  }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+}
+
+.spinner {
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--color-accent-dim);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error {
+  font-size: $fontSm;
+  color: var(--color-danger);
+  padding: 0 calc(#{$sm} + #{$xsm});
+}

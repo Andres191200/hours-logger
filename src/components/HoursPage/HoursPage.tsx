@@ -170,14 +170,14 @@ export function HoursPage() {
   })
 
   const handleTargetSelected = useCallback(
-    (target: SearchTarget, activityType?: ActivityType) => {
+    (target: SearchTarget, activityType?: ActivityType, hours?: number, minutes?: number) => {
       if (isDuplicate(activeEntries, target, activityType)) return
       const entry: ActiveEntry = {
         id: `${Date.now()}-${Math.random()}`,
         target,
         activityType,
-        hours: 1,
-        minutes: 0,
+        hours: hours ?? 1,
+        minutes: minutes ?? 0,
         label: makeLabel(target, activityType),
       }
       setActiveEntries((prev) => [...prev, entry])

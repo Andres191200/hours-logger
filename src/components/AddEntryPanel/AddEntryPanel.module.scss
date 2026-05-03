@@ -6,6 +6,43 @@
   gap: $md;
 }
 
+.modeRow {
+  display: flex;
+  align-items: center;
+}
+
+.modeBtn {
+  @include button-reset;
+  @include focus-ring;
+  display: flex;
+  align-items: center;
+  gap: $xsm;
+  padding: $xsm $sm;
+  border: 1px solid var(--color-border);
+  border-radius: $radiusFull;
+  font-size: $fontSm;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  transition: background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+
+  &:hover {
+    background: var(--color-accent-dim);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+}
+
+.modeBtnActive {
+  background: var(--color-accent-dim);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.modeBtnIcon {
+  font-size: 11px;
+  line-height: 1;
+}
+
 .suggestions {
   display: flex;
   flex-wrap: wrap;
